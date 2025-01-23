@@ -1,6 +1,4 @@
-
-Admin,12345678
-onim,onim1234
-ayon,ayon1234
-rafi,rafi1234
-pertha,pertha1234
+Admin,admin@gmail.com,01884588936,12345
+Ayon,ayon@gmail.com,01317997555,1325
+Onim,onim@gmail.com,01822706981,1234
+Rafi,rafi@gamil.com,01833706981,1234
