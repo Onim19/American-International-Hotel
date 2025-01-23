@@ -8,10 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-public class Admin extends JFrame implements ActionListener {
+public class Admin extends JFrame implements ActionListener{
     JTextField userName;
     JPasswordField passWord;
-    JButton Login,Cancel,Register;
+    JButton Login,Cancel,Register_Admin;
 
     public Admin() {
         super.getContentPane().setBackground(Color.LIGHT_GRAY);
@@ -42,7 +42,7 @@ public class Admin extends JFrame implements ActionListener {
         picture.setBounds(700,150,610,418);
         l_bg.add(picture);
         //adding label for user name
-        JLabel user_name=new JLabel("User name : ");
+        JLabel user_name=new JLabel("Username : ");
         user_name.setBounds(200,250,100,30);//adjusted position
         user_name.setForeground(Color.WHITE);//set label color to white
         l_bg.add(user_name);
@@ -84,13 +84,14 @@ public class Admin extends JFrame implements ActionListener {
         l_bg.add(Cancel);
 
         //register button
-        Register=new JButton("Register");
-        Register.setBounds(495,400,90,30);
-        Register.setFocusable(false);
-        Register.setBackground(Color.WHITE);//set background color to white
-        Register.setForeground(Color.BLACK);//set font color to black
-        Register.setFont(new Font("Serif",Font.BOLD,12));
-        l_bg.add(Register);
+        Register_Admin=new JButton("Register");
+        Register_Admin.setBounds(495,400,90,30);
+        Register_Admin.setFocusable(false);
+        Register_Admin.setBackground(Color.WHITE);//set background color to white
+        Register_Admin.setForeground(Color.BLACK);//set font color to black
+        Register_Admin.setFont(new Font("Serif",Font.BOLD,12));
+        Register_Admin.addActionListener(this);
+        l_bg.add(Register_Admin);
 
         super.setVisible(true);
     }
@@ -102,37 +103,40 @@ public class Admin extends JFrame implements ActionListener {
             super.dispose();
             new Welcome();
         }
+        else if(e.getSource()==Register_Admin){
+            super.dispose();
+            new RegisterAdmin();
+        }
     }
 
-    public void admin() {
+    public void admin(){
         String username=userName.getText();
         String password=new String(passWord.getPassword());
-        AdminDetails u=null;
         try {
-            File admin=new File("src/Hotel_Management_System/Person/Details/TextFiles/AdminDetails.txt");
-            if(!admin.exists()) {
+            File file=new File("src/Hotel_Management_System/Person/Details/TextFiles/AdminDetails.txt");
+            if(!file.exists()){
                 JOptionPane.showMessageDialog(null,"No user is registered!");
             }
-            BufferedReader reader=new BufferedReader(new FileReader(admin));
-            String line=reader.readLine();
+            BufferedReader reader=new BufferedReader(new FileReader(file));
+            String line;
             boolean loggedin=false;
-            while((line=reader.readLine())!=null) {
+            while((line=reader.readLine())!=null){
                 String[] parts=line.split(",");
-                if(parts[0].equals(username)&&parts[1].equals(password)) {
+                if((parts[0].equals(username)||parts[1].equals(username)||parts[2].equals(username))&&parts[3].equals(password)){
                     loggedin=true;
-                    u=new AdminDetails(parts[0],parts[1]);
                     break;
                 }
             }
             reader.close();
-            if(loggedin) {
+            if(loggedin){
                 JOptionPane.showMessageDialog(null,"Login successful");
                 super.dispose();
             } else {
                 JOptionPane.showMessageDialog(null,"Invalid username or password");
                 return;
             }
-        } catch(IOException ae) {
+        }
+        catch(IOException ae){
             ae.printStackTrace();
         }
     }
