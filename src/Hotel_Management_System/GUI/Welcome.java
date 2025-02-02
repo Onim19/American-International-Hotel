@@ -73,7 +73,4 @@ public class Welcome extends JFrame implements ActionListener{
             new BookRoom();
         }
     }
-    public static void main(String[] args) {
-        new Welcome();
-    }
 }
