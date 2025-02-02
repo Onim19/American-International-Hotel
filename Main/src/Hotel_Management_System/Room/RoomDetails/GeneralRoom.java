@@ -12,7 +12,6 @@ public class GeneralRoom {
         Admin_Frame();
     }
     public GeneralRoom(JFrame x){
-        Guest_Frame("General",x);
     }
     public GeneralRoom(String room,String type){
     }

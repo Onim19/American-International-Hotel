@@ -12,7 +12,6 @@ public class VipRoom {
         Admin_Frame();
     }
     public VipRoom(JFrame x){
-        Guest_Frame("Vip",x);
     }
 
     public VipRoom(String room,String type){

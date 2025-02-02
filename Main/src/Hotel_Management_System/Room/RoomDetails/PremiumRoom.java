@@ -12,7 +12,6 @@ public class PremiumRoom {
         Admin_Frame();
     }
     public PremiumRoom(JFrame x){
-            Guest_Frame("Premium",x);
     }
 
     public PremiumRoom(String room,String type){
