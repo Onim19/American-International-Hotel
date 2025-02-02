@@ -132,9 +132,4 @@ public class Payment implements ActionListener {
             }
         }
     }
-
-    public static void main(String[] args){
-        GuestDetails guest=new GuestDetails("501","Deluxe","John Doe","30","Male","Engineer","1234567890",5000.0,3);
-        new Payment(guest,5000.0,300.0);
-    }
 }
