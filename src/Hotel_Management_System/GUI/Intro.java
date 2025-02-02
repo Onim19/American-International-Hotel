@@ -9,6 +9,8 @@ public class Intro extends JFrame {
         JLabel label = new JLabel(imageIcon);
         label.setBounds(0,0,498,374);
         add(label);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
 
         setTitle("Intro");
         ImageIcon icon=new ImageIcon("src/img/Icon.png");//Icon
@@ -25,10 +27,5 @@ public class Intro extends JFrame {
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-
-    public static void main(String[] args) {
-        new Intro();
     }
 }
