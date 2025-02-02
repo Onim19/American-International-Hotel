@@ -12,7 +12,6 @@ public class BookRoom implements ActionListener {
     JFrame frame;
     DefaultTableModel model;
     JScrollPane currentScrollPane;
-    JLabel select_room;
 
     // Constructor
     public BookRoom() {
@@ -118,11 +117,5 @@ public class BookRoom implements ActionListener {
             frame.dispose();
             new Welcome();
         }
-    }
-
-
-    // Main method to run the program
-    public static void main(String[] args) {
-        new BookRoom(); // Create an instance of BookRoom, which calls the constructor
     }
 }
