@@ -147,8 +147,4 @@ public class AdminDashBoard extends JFrame implements ActionListener {
             new RegisterAdmin();
         }
     }
-
-    public static void main(String[] args) {
-        new AdminDashBoard();
-    }
 }
