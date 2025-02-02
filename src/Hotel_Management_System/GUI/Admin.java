@@ -64,7 +64,7 @@ public class Admin extends JFrame implements ActionListener{
 
         //login button
         Login=new JButton("Log in");
-        Login.setBounds(325,400,70,30);
+        Login.setBounds(360,350,70,30);
         Login.setFocusable(false);
         Login.setBackground(Color.WHITE);//set background color to white
         Login.setForeground(Color.BLACK);//set font color to black
@@ -74,7 +74,7 @@ public class Admin extends JFrame implements ActionListener{
 
         //cancel button
         Cancel=new JButton("Cancel");
-        Cancel.setBounds(410,400,70,30);
+        Cancel.setBounds(460,350,70,30);
         Cancel.setFocusable(false);
         Cancel.setBackground(Color.WHITE);//set background color to white
         Cancel.setForeground(Color.BLACK);//set font color to black
