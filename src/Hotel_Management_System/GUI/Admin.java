@@ -15,7 +15,7 @@ public class Admin extends JFrame implements ActionListener{
     public Admin() {
         super.getContentPane().setBackground(Color.LIGHT_GRAY);
         super.setSize(1280,720);
-        super.setLocation(150,50);
+        super.setLocationRelativeTo(null);
         super.setLayout(null);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setResizable(false);
@@ -128,9 +128,5 @@ public class Admin extends JFrame implements ActionListener{
         catch(IOException ae){
             ae.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new Admin();
     }
 }
