@@ -1,5 +1,6 @@
 package Hotel_Management_System.Person;
 
+import Hotel_Management_System.GUI.AdminDashBoard;
 import Hotel_Management_System.Person.Details.*;
 
 import javax.swing.*;
@@ -11,25 +12,34 @@ import java.awt.event.*;
 public class Staff extends JFrame implements ActionListener{
     JTable table;
     JScrollPane scroll;
-    JLabel nameLabel,ageLabel,genderLabel,jobTitleLabel,salaryLabel,phoneLabel;
+    JLabel image,nameLabel,ageLabel,genderLabel,jobTitleLabel,salaryLabel,phoneLabel;
     JTextField nameField,ageField,salaryField,phoneField;
     JRadioButton maleRadio,femaleRadio;
     ButtonGroup genderGroup;
     JComboBox<String> jobTitleComboBox;
-    JButton submitButton;
+    JButton submitButton,backButton;
     String[]col={"ID","NAME","AGE","GENDER","JOB TITLE","SALARY","PHONE"};
     String[][]row;
     StaffDetails staff;
     public Staff(){
         super.getContentPane().setBackground(Color.WHITE);
         super.setSize(1280, 720);
-        super.setLocation(150, 50);
+        super.setLocationRelativeTo(null);
         super.setLayout(null);
         ImageIcon icon=new ImageIcon("src/img/Icon.png");//Icon
         super.setIconImage(icon.getImage());
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setResizable(false);
         super.setTitle("EMPLOYEE");
+
+        //adding background
+        ImageIcon image1=new ImageIcon("src/img/Employee.jpg");
+        Image image2=image1.getImage().getScaledInstance(1280,720,Image.SCALE_DEFAULT);
+        ImageIcon image3=new ImageIcon(image2);
+
+        image=new JLabel(image3);
+        image.setBounds(0,0,1280,720);
+        super.add(image);
 
         //loading row data
         StaffData();
@@ -38,25 +48,25 @@ public class Staff extends JFrame implements ActionListener{
         JLabel addEmployeeLabel = new JLabel("Add Staff");
         addEmployeeLabel.setBounds(50, 100, 200, 50);
         addEmployeeLabel.setFont(new Font("Serif", Font.BOLD, 30));
-        super.add(addEmployeeLabel);
+        image.add(addEmployeeLabel);
 
         nameLabel = new JLabel("Name: ");
         nameLabel.setBounds(50, 170, 100, 30);
         nameLabel.setFont(new Font("Serif", Font.PLAIN, 16));
-        super.add(nameLabel);
+        image.add(nameLabel);
 
         nameField = new JTextField();
         nameField.setBounds(150, 170, 250, 30);
-        super.add(nameField);
+        image.add(nameField);
 
         ageLabel = new JLabel("Age: ");
         ageLabel.setBounds(50, 210, 100, 30);
         ageLabel.setFont(new Font("Serif",Font.PLAIN,16));
-        super.add(ageLabel);
+        image.add(ageLabel);
 
         ageField = new JTextField();
         ageField.setBounds(150, 210, 250, 30);
-        super.add(ageField);
+        image.add(ageField);
 
         genderLabel = new JLabel("Gender: ");
         genderLabel.setBounds(50, 250, 100, 30);
@@ -76,13 +86,13 @@ public class Staff extends JFrame implements ActionListener{
         genderGroup.add(maleRadio);
         genderGroup.add(femaleRadio);
 
-        super.add(maleRadio);
-        super.add(femaleRadio);
+        image.add(maleRadio);
+        image.add(femaleRadio);
 
         jobTitleLabel = new JLabel("Job Title: ");
         jobTitleLabel.setBounds(50, 290, 100, 30);
         jobTitleLabel.setFont(new Font("Serif", Font.PLAIN, 16));
-        super.add(jobTitleLabel);
+        image.add(jobTitleLabel);
 
         jobTitleComboBox = new JComboBox<>(new String[] {"HOUSEKEEPING",
                 "CLEANER",
@@ -94,25 +104,25 @@ public class Staff extends JFrame implements ActionListener{
                 "WATCHMAN"});
         jobTitleComboBox.setBounds(150, 290, 250, 30);
         jobTitleComboBox.setBackground(Color.WHITE);
-        super.add(jobTitleComboBox);
+        image.add(jobTitleComboBox);
 
         salaryLabel = new JLabel("Salary: ");
         salaryLabel.setBounds(50, 330, 100, 30);
         salaryLabel.setFont(new Font("Serif", Font.PLAIN, 16));
-        super.add(salaryLabel);
+        image.add(salaryLabel);
 
         salaryField = new JTextField();
         salaryField.setBounds(150, 330, 250, 30);
-        super.add(salaryField);
+        image.add(salaryField);
 
         phoneLabel = new JLabel("Phone: ");
         phoneLabel.setBounds(50, 370, 100, 30);
         phoneLabel.setFont(new Font("Serif", Font.PLAIN, 16));
-        super.add(phoneLabel);
+        image.add(phoneLabel);
 
         phoneField = new JTextField();
         phoneField.setBounds(150, 370, 250, 30);
-        super.add(phoneField);
+        image.add(phoneField);
 
         // Submit Button for adding employee
         submitButton = new JButton("Submit");
@@ -121,7 +131,15 @@ public class Staff extends JFrame implements ActionListener{
         submitButton.setBackground(Color.WHITE);
         submitButton.setForeground(Color.BLACK);
         submitButton.addActionListener(this);
-        super.add(submitButton);
+        image.add(submitButton);
+
+        backButton = new JButton("Back");
+        backButton.setBounds(270, 410, 100, 30);
+        backButton.setFocusable(false);
+        backButton.setBackground(Color.WHITE);
+        backButton.setForeground(Color.BLACK);
+        backButton.addActionListener(this);
+        image.add(backButton);
         super.setVisible(true);
     }
 
@@ -129,13 +147,17 @@ public class Staff extends JFrame implements ActionListener{
         if(e.getSource()==submitButton){
             AddStaff();
         }
+        else if(e.getSource()==backButton){
+            super.dispose();
+            new AdminDashBoard();
+        }
     }
 
     public void StaffData() {
         try {
             File file = new File("src/Hotel_Management_System/Person/Details/TextFiles/StaffDetails.txt");
             if (!file.exists()) {
-                JOptionPane.showMessageDialog(this, "No employee is registered", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No staff is registered", "ERROR", JOptionPane.ERROR_MESSAGE);
                 row = new String[0][col.length];
                 return;
             }
@@ -161,7 +183,12 @@ public class Staff extends JFrame implements ActionListener{
             reader.close();
 
             // Create or update the table with the new data
-            DefaultTableModel model = new DefaultTableModel(row, col);
+            DefaultTableModel model=new DefaultTableModel(row,col){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return column>0;
+                }
+            };
 
             if (table == null) {
                 table = new JTable(model);
@@ -191,13 +218,51 @@ public class Staff extends JFrame implements ActionListener{
             } else {
                 scroll = new JScrollPane(table);
                 scroll.setBounds(420, 50, 800, 500);
-                super.add(scroll);
+                image.add(scroll);
             }
+
+            //adding button for update details
+            JButton save=new JButton("Save Changes");
+            save.setBounds(700,600, 120, 40);
+            save.addActionListener(e->{
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                    for (int r = 0; r < model.getRowCount(); r++) {
+                        writer.write(model.getValueAt(r, 0) + "," +
+                                model.getValueAt(r, 1) + "," +
+                                model.getValueAt(r, 2) + "," +
+                                model.getValueAt(r, 3) + "," +
+                                model.getValueAt(r, 4) + "," +
+                                model.getValueAt(r, 5) + "," +
+                                model.getValueAt(r, 6));
+                        writer.newLine();
+                    }
+                    JOptionPane.showMessageDialog(null, "Staff details updated successfully!");
+                }
+                catch (IOException x){
+                    x.printStackTrace();
+                }
+            });
+            image.add(save);
+
+            //adding a delete option
+            JButton deleteButton=new JButton("Delete");
+            deleteButton.setBounds(840,600,120,40);
+            deleteButton.addActionListener(e->{
+                int selectedRow=table.getSelectedRow();
+                if(selectedRow==-1){
+                    JOptionPane.showMessageDialog(null,"Select a row to delete!","Error",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                int confirm=JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this staff member?","Confirm Delete",JOptionPane.YES_NO_OPTION);
+                if(confirm==JOptionPane.YES_OPTION){
+                    deleteStaff(selectedRow);
+                }
+            });
+            image.add(deleteButton);
         } catch (IOException ae) {
             ae.printStackTrace();
         }
     }
-
     public void AddStaff(){
         String name=nameField.getText().toUpperCase();
         String age=ageField.getText();
@@ -273,7 +338,30 @@ public class Staff extends JFrame implements ActionListener{
         return String.valueOf(lastId + 1);
     }
 
-    public static void main(String[] args) {
-        new Staff();
+    public void deleteStaff(int rowIndex){
+        File file=new File("src/Hotel_Management_System/Person/Details/TextFiles/StaffDetails.txt");
+        try(BufferedReader reader=new BufferedReader(new FileReader(file));
+            BufferedWriter writer=new BufferedWriter(new FileWriter("src/Hotel_Management_System/Person/Details/TextFiles/temp.txt"))){
+            String line;int currentIndex=0;
+            while((line=reader.readLine())!=null){
+                if(currentIndex!=rowIndex){
+                    writer.write(line);
+                    writer.newLine();
+                }
+                currentIndex++;
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,"Error deleting staff","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        File originalFile=new File("src/Hotel_Management_System/Person/Details/TextFiles/StaffDetails.txt");
+        File tempFile=new File("src/Hotel_Management_System/Person/Details/TextFiles/temp.txt");
+        if(originalFile.delete()&&tempFile.renameTo(originalFile)){
+            JOptionPane.showMessageDialog(this,"Staff deleted successfully!");
+            StaffData();
+        }else{
+            JOptionPane.showMessageDialog(this,"Error updating file","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
