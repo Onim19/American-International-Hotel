@@ -10,7 +10,7 @@ import java.io.*;
 public class Admin extends JFrame implements ActionListener{
     JTextField userName;
     JPasswordField passWord;
-    JButton Login,Cancel,Register_Admin;
+    JButton Login,Cancel;
 
     public Admin() {
         super.getContentPane().setBackground(Color.LIGHT_GRAY);
@@ -82,15 +82,6 @@ public class Admin extends JFrame implements ActionListener{
         Cancel.setFont(new Font("Serif",Font.BOLD,12));
         l_bg.add(Cancel);
 
-        //register button
-        Register_Admin=new JButton("Register");
-        Register_Admin.setBounds(495,400,90,30);
-        Register_Admin.setFocusable(false);
-        Register_Admin.setBackground(Color.WHITE);//set background color to white
-        Register_Admin.setForeground(Color.BLACK);//set font color to black
-        Register_Admin.setFont(new Font("Serif",Font.BOLD,12));
-        Register_Admin.addActionListener(this);
-        l_bg.add(Register_Admin);
 
         super.setVisible(true);
     }
@@ -101,10 +92,6 @@ public class Admin extends JFrame implements ActionListener{
         } else if(e.getSource()==Cancel) {
             super.dispose();
             new Welcome();
-        }
-        else if(e.getSource()==Register_Admin){
-            super.dispose();
-            new RegisterAdmin();
         }
     }
 
