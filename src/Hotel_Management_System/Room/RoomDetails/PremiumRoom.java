@@ -1,25 +1,24 @@
 package Hotel_Management_System.Room.RoomDetails;
-import Hotel_Management_System.Person.GuestRegistration;
-import Hotel_Management_System.Room.Room;
+import Hotel_Management_System.Person.*;
+import Hotel_Management_System.Room.*;
 
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.io.*;
 
-public class PremiumRoom {
-    public PremiumRoom(){
+public class GeneralRoom {
+    public GeneralRoom(){
         Admin_Frame();
     }
-    public PremiumRoom(JFrame x){
-            Guest_Frame("Premium",x);
+    public GeneralRoom(JFrame x){
+        Guest_Frame("General",x);
     }
-
-    public PremiumRoom(String room,String type){
+    public GeneralRoom(String room,String type){
     }
 
     public boolean updateStatusToOccupied(String room,String Type){
-        File file=new File("src/Hotel_Management_System/Room/RoomDetails/RoomTextFiles/PremiumRoom.txt");
+        File file=new File("src/Hotel_Management_System/Room/RoomDetails/RoomTextFiles/GeneralRoom.txt");
         String[][]data;
 
         //counting lines
@@ -42,6 +41,7 @@ public class PremiumRoom {
                 String[] parts= lines.split(",");
                 if(parts.length==4){
                     if(parts[0].equals(room) && parts[1].equals(Type) && parts[3].equals("AVAILABLE")){
+                        System.out.println("Room found and updating: " + parts[0]); // Debug log
                         parts[3]="OCCUPIED";
                         found=true;
                     }
@@ -51,7 +51,6 @@ public class PremiumRoom {
             }
         } catch (IOException ae){
             ae.printStackTrace();
-            return false;
         }
 
         //now it will update the data into the text file
@@ -61,19 +60,21 @@ public class PremiumRoom {
                     writer.write(data[i][0] + "," + data[i][1] + "," + data[i][2] + "," + data[i][3]);
                     writer.newLine();
                 }
+                System.out.println("File updated successfully.");
                 return true;
             }
             catch (IOException a){
                 a.printStackTrace();
                 return false;
             }
-        }
-        else{
+        }else {
+            JOptionPane.showMessageDialog(null,"Failed");
             return false;
         }
     }
+
     public void Admin_Frame(){
-        JFrame fm = new JFrame("Premium Room Details");
+        JFrame fm = new JFrame("General Room Details");
         fm.getContentPane().setBackground(Color.WHITE);
         fm.setSize(720, 580);
         fm.setLocationRelativeTo(null);
@@ -84,7 +85,7 @@ public class PremiumRoom {
         fm.setResizable(false);
 
         // Adding Background Image
-        ImageIcon image1=new ImageIcon("src/img/PremiumRoom.jpg");
+        ImageIcon image1=new ImageIcon("src/img/GeneralRoom.jpg");
         Image image2=image1.getImage().getScaledInstance(720,580,Image.SCALE_DEFAULT);
         ImageIcon image3=new ImageIcon(image2);
 
@@ -96,7 +97,7 @@ public class PremiumRoom {
         String[]col={"Room No.","Type","Cleaning Status","Availability"};
         String[][]row;
         try{
-            File file = new File("src/Hotel_Management_System/Room/RoomDetails/RoomTextFiles/PremiumRoom.txt");
+            File file = new File("src/Hotel_Management_System/Room/RoomDetails/RoomTextFiles/GeneralRoom.txt");
             if (!file.exists()) {
                 JOptionPane.showMessageDialog(null, "Rooms not added yet", "Error", JOptionPane.ERROR_MESSAGE);
                 row = new String[0][col.length];
@@ -181,11 +182,12 @@ public class PremiumRoom {
             ae.printStackTrace();
         }
     }
+
     public JScrollPane Guest_Frame(String roomType,JFrame fm) {
         String[] col = {"Room No.","Type","Cleaning Status","Availability"};
         String[][] row;
         try {
-            File file = new File("src/Hotel_Management_System/Room/RoomDetails/RoomTextFiles/PremiumRoom.txt");
+            File file = new File("src/Hotel_Management_System/Room/RoomDetails/RoomTextFiles/GeneralRoom.txt");
             if (!file.exists()) {
                 JOptionPane.showMessageDialog(null, "Rooms not added yet", "Error", JOptionPane.ERROR_MESSAGE);
                 row = new String[0][col.length];
@@ -242,13 +244,13 @@ public class PremiumRoom {
                                 "Selected Room: " + roomNo + "\nType: " + type + "\nCleaning: " + cleaningStatus + "\nBooking: " + bookingStatus + "\nConfirm?",
                                 "Room Details", JOptionPane.YES_NO_OPTION);
                         if(response==JOptionPane.YES_OPTION){
-                            if(type.equals("PREMIUM/SINGLE")){
+                            if(type.equals("GENERAL/SINGLE")){
                                 fm.dispose();
-                                new GuestRegistration(roomNo,"PREMIUM/SINGLE",3500.0);
+                                new GuestRegistration(roomNo,"GENERAL/SINGLE",1500.0);
                             }
-                            else if(type.equals("PREMIUM/DOUBLE")){
+                            else if(type.equals("GENERAL/DOUBLE")){
                                 fm.dispose();
-                                new GuestRegistration(roomNo,"PREMIUM/DOUBLE",5000.0);
+                                new GuestRegistration(roomNo,"GENERAL/DOUBLE",2000.0);
                             }
                         }
                     }
